@@ -1,74 +1,37 @@
 import java.io.*;
 import java.util.LinkedList;
-import java.util.Scanner;
 
 public class Main {
-    static final String commentSymbol = "//"; //comment symbol must be separated by a space by the last numerical value of a nutrient
-    static final String unknownSymbol = "???";
+    public static final String commentSymbol = "//"; //comment symbol must be separated by a space by the last numerical value of a nutrient
+    public static final String unknownSymbol = "???"; //https://stackoverflow.com/a/215505/9375488
     private static final String foodsFile = "foodData.txt";
     private static final String mealsFile = "mealsData.txt";
 
-    private static final String cmd1 = "printFoods";
-    private static final String cmd1_2 = "foodInfo";
-    private static final String cmd2 = "add";
-    private static final String cmd3 = "edit";
-    private static final String cmd4 = "del";
-
-    private static final String cmd5 = "sumUp";
-    private static final String cmd6 = "resetSum";
-
-    private static final String cmd7 = "printMeals";
-    private static final String cmd8 = "mealInfo";
-    private static final String cmd9 = "createMeal";
-    private static final String cmd10 = "editMeal";
-    private static final String cmd11 = "delMeal";
-
-    private static final String cmd12 = "printNutrients";
-    private static final String cmd13 = "reload";
-    private static final String cmd14 = "extra";
-
-    private static final String extraInfo = "Print end to finish.\n" +
-            "Remember that all foods/meals have their respective amount of nutrients present in the food per 100g of food.\n" +
-            "When loading the data files, the program will ignore food lines that starts with non-letter char and will perceive \"//\" as a comment and will ignore anything after it.\n" +
-            "When loading the data files, the program will stop reading when finding a food named \"end\"\n";
-
     private static LinkedList<Food> foods = new LinkedList<>();
+    //public static HashMap<String, Food> allFoods = new HashMap<>(); change to this in different branch
     private static LinkedList<Food> meals = new LinkedList<>();
-    private static int size = Nutrients.values().length;
-    private static Food currentSum = new Food("currentSum", new Nutrients[size], new float[size]); //can be thought as the "food" with all the properties summed together
-    //public static HashMap<String, float[]> foods = new HashMap<>();
+    private static final int ammountOfNutrients = Nutrients.values().length;
+    private static Food currentSum = new Food("currentSum", new Nutrients[ammountOfNutrients], new float[ammountOfNutrients]); //can be thought as the "food" with all the properties summed together
 
-
-    public static void main(String[] args) {
-        long startTime = System.nanoTime();
-        loadCurrentData();
-        long stopTime = System.nanoTime();
-        print("Load time: "+(stopTime - startTime)*0.000000001+"s\n");
-        run();
-    }
-
-    private static void run() {
-        System.out.println("WELCOME TO THE NUTRITION TRACKER \n Here are the commands(it ignores case): ");
-        System.out.printf("%s (and nutrients if desired), %s (prints info of specific food),  %s(adds food), %s(edits macros and micros of a food), %s(deletes food) \n", cmd1, cmd1_2, cmd2, cmd3, cmd4); //food commands
-        System.out.printf("%s(sums up a list of foods OR meals you type), %s(resets current macros and micros summed up) \n", cmd5, cmd6);
-        System.out.printf("%s (and nutrients if desired), %s(prints info of specific meal), %s, %s, %s \n", cmd7, cmd8, cmd9, cmd10, cmd11);
-        System.out.printf("%s (prints the available macro and micro nutrients names and abbreviations. %s (reload file data)", cmd12, cmd13);
-        System.out.printf("%s (prints extra info about the program)", cmd14);
-        print("\n");
-        String input;
-        do{
-            input = getInput();
-            processConsoleCommand(input);
+    static{ //static block -> https://www.geeksforgeeks.org/g-fact-79/, this only runs once, and that's when the class is loaded into memory
+        Nutrients[] nutri = new Nutrients[ammountOfNutrients];
+        int i = 0;
+        for(Nutrients n : Nutrients.values()){
+            nutri[i++] = n;
         }
-        while (!input.equalsIgnoreCase("end"));
+        currentSum.setNutrients(nutri);
+        print("Array of nutrients loaded and current sum reseted\n");
     }
 
-    private static void sharedFunction_cmd1ANDcmd7(LinkedList<Food> list){
+    static void sharedFunction_cmd1ANDcmd7(byte n){
+        LinkedList<Food> list;
+        if(n==0) list = foods;
+        else list = meals;
         print("Print info aswell? (if so, type \'yes\')\n");
         String res = getInput();
         if(res.equalsIgnoreCase("yes")) {
             for (int i = 0; i < list.size(); i++) {
-                print(getFoodAsString(list.get(i), true));
+                print(Main.getFoodAsString(list.get(i), true));
                 print("\n");
             }
         } else {
@@ -79,96 +42,63 @@ public class Main {
         }
     }
 
-    private static void sharedFunction_cmd1_2ANDcmd8(LinkedList<Food> list, String name){
+    static void sharedFunction_cmd2ANDcmd8(String name){ //name="Food" or "Meal"
+        LinkedList<Food> list;
+        if(name.equalsIgnoreCase("Food")) list = foods;
+        else list = meals;
         print(name+" name? ");
         String res = getInput();
         for (int i = 0; i < list.size(); i++) {
             Food food = list.get(i);
             if(food.getName().equalsIgnoreCase(res)){
-                print(getFoodAsString(food, true));
+                print(Main.getFoodAsString(food, true));
             }
         }
-    }
-
-    private static void processConsoleCommand(String input) {
-
-        if(input.equalsIgnoreCase(cmd1)){ //print all foods names, and info if desired
-            sharedFunction_cmd1ANDcmd7(foods);
-        }
-
-        else if(input.equalsIgnoreCase(cmd1_2)){ //print info of a specific food
-            sharedFunction_cmd1_2ANDcmd8(foods,"Food");
-        }
-
-        else if(input.equalsIgnoreCase(cmd2)){ //adds a foot to the currently loaded list of foods
-            addFood();
-        }
-
-        else if(input.equalsIgnoreCase(cmd3)){ //edit macros and micros of a given a food name
-            editFood();
-        }
-
-        else if(input.equalsIgnoreCase(cmd4)){ //delete a food in the foods file given its name
-            deleteFood();
-        }
-
-        else if(input.equalsIgnoreCase(cmd5)){ //sums up a combination of foods or meals you type and prints the macros and micros do the current sum and prints the result in the end
-            sumUpFoods();
-        }
-
-        else if(input.equalsIgnoreCase(cmd6)){ //reset the current sum of macros and micros
-            currentSum = new Food("currentSum", new Nutrients[size], new float[size]);
-        }
-
-        else if(input.equalsIgnoreCase(cmd7)){ //print all meals available
-            sharedFunction_cmd1ANDcmd7(meals);
-        }
-
-        else if(input.equalsIgnoreCase(cmd8)){ //prints info of a given meal
-            sharedFunction_cmd1_2ANDcmd8(meals,"Meal");
-        }
-
-        else if(input.equalsIgnoreCase(cmd9)){ //create a meal, give it a name, and directly add foods, macros or micros to it
-            //todo
-        }
-
-        else if(input.equalsIgnoreCase(cmd10)){ //edit macros and micros of a meal given its name
-            //todo
-        }
-
-        else if(input.equalsIgnoreCase(cmd11)){ //delete a meal from the meals file given its name
-            //todo
-        }
-
-        else if(input.equalsIgnoreCase(cmd12)){ //details all the nutrients names, abbreviations and their groups
-            getAllNutrientNamesAndAbbreviations();
-        }
-        else if(input.equalsIgnoreCase(cmd13)){
-            loadCurrentData();
-        }
-        else if(input.equalsIgnoreCase(cmd14)){
-            print(extraInfo);
-        }
-        else if (input.equalsIgnoreCase("end")){}
-        else { print("\nCommand doesn't exist\n");}
     }
 
     //CALCULATE FINAL MEAL/DAILY NUTRITIONAL VALUES.
-    //todo
-    private static void sumUpFoods() {
-        print("Print the names of foods, so you calculate the total nutritional values for a meal or for the day(finish by typing \'end\'):");
-        while(!getInput().equalsIgnoreCase("end")){
-            for(Food food : foods){
+    static void sumUpFoods() { //should all foods have all the micros and macros INCLUDING zeros or discard those? hmmm
+        print("Type the food name to add, followed by the ammount in grams(finish by typing \'end\'):\n");
+        String r = getInput();
+        float[] newVals = new float[ammountOfNutrients];
+        while(!r.equalsIgnoreCase("end")){
+            String[] values = r.trim().split(" ");
 
+            if(values.length!=2) { print("Improper ammount of inputs\n"); return; }
+
+            Food foodToAdd = getFood(values[0]); //getFood already ignores case
+            if(foodToAdd==null) { print("Food doesn't exist\n"); return; }
+
+            float ammount = 0;
+            try {
+                ammount = Float.parseFloat(values[1]);
+            } catch(Exception e) { print("Error when converting number to float\n"); }
+
+            float[] vals = foodToAdd.getValues();
+            Nutrients[] nutri = foodToAdd.getNutrients();
+            Nutrients[] orgNutri = currentSum.getNutrients();
+            for(int i = 0; i< ammountOfNutrients; i++){
+                for(int j = 0; i<vals.length; j++) {
+                    if(nutri[j].name().equalsIgnoreCase(orgNutri[i].name())){
+                        newVals[i] = newVals[i] + (vals[j] * (ammount/100));
+                    }
+                }
             }
+
+            print("Next food:\n");
+            r = getInput();
         }
+        currentSum.setValues(newVals);
         print(getFoodAsString(currentSum, true)+"\n");
     }
 
+    static void resetSum(){
+        currentSum = new Food("currentSum", new Nutrients[ammountOfNutrients], new float[ammountOfNutrients]);
+    }
 
     //EDIT DATA FROM foodData.txt from console
 
-    public static void addFood(){
+    static void addFood(){
         print("Type the food name followed by the nutrients name followed by the amount of grams\n(remember to convert micrograms to milligrams for micros, don't type the \'g\' and type everything separated by 1 space)\nit contains per 100g (type end to finish)\n");
         String input = getInput();
         if(input.isEmpty()) { print("Error, empty input\n"); return;}
@@ -182,7 +112,7 @@ public class Main {
     }
 
     //todo
-    public static void editFood(){
+    static void editFood(){
         System.out.println("Food name?");
         if(getFood(getInput())==null) {
             print("Food doesn't exist");
@@ -196,7 +126,7 @@ public class Main {
     }
 
     //todo
-    private static void deleteFood() {
+    static void deleteFood() {
         System.out.println("Food name?");
         if(getFood(getInput())==null) {
             print("Food doesn't exist");
@@ -212,7 +142,7 @@ public class Main {
 
     //LOAD AND PROCESS DATA FROM foodData.txt
     //todo
-    private static void loadCurrentData() { //abides by a certain format
+    static void loadCurrentData() { //abides by a certain format
         File file = new File(foodsFile);
         if( !(file.exists()) ) {
             try { file.createNewFile(); } catch (IOException e) { }
@@ -226,11 +156,12 @@ public class Main {
             while ((line = br.readLine()) != null) {
                 if(line.isEmpty()) continue;
                 executed = true;
-                int indexOfComment = line.indexOf(commentSymbol);
-                if(indexOfComment==-1) indexOfComment = line.length()-1;
+                int indexOfComment = line.indexOf(commentSymbol); //if exists
+                if(indexOfComment==-1) indexOfComment = line.length(); //because then the interval is open on the left [ ; [
                                       //        [0,indexOfComment+1[
                                       //https://www.javatpoint.com/substring   cut out unnecessary spaces    split by space
-                String[] values = line.substring(0,indexOfComment+1).replaceAll("\\s+", " ").split(" "); //pick each individual string(data) and put it in an array of strings
+
+                String[] values = line.substring(0,indexOfComment).replaceAll("\\s+", " ").split(" "); //pick each individual string(data) and put it in an array of strings
                 if(indexOfComment==-1) values[values.length-1] = commentSymbol; //example: values = ["Flakes", "Cal", "361", "carbs", "67.7", "pro", "12.2", "//"]
                 if(processLineInTXTDataFile(true, values)==null) break;
             }
@@ -241,13 +172,14 @@ public class Main {
         //todo
     }
 
-    private static Food processLineInTXTDataFile(boolean isFood, String[] values) { //adds a line of data(can be food or meal) given the current array of data
-        String foodName = values[0];;
+    private static Food processLineInTXTDataFile(boolean isFood, String[] values) { //adds a line of data(can be food or meal) given the current array of data, IMPORTANT
+        String foodName = values[0];
+        if(foodName.isEmpty()) return new Food();
         if(foodName.equalsIgnoreCase("end")) return null;
-        if(getFood(foodName)!=null) { print("\nFood already exists\n"); return new Food(); }
-        if(!isAlpha((foodName))) return new Food();
+        if(getFood(foodName)!=null) { print("\nThe food named "+foodName+" already exists\n"); return new Food(); }
+        if(!doesOnlyHaveLetters((foodName))) return new Food();
         boolean error = false;
-        StringBuilder errorMessage = new StringBuilder("Line at food named "+foodName+" has errors: ");
+        StringBuilder errorMessage = new StringBuilder("\nLine at food named "+foodName+" has errors: ");
         Nutrients[] nutrients = new Nutrients[Nutrients.values().length];
         float[] vals = new float[Nutrients.values().length];
         int length = values.length;
@@ -293,13 +225,11 @@ public class Main {
 
     //GENERAL and UTILITY METHODS
     public static void print(String text){ //to shorten the "System.out.println"
-        System.out.print(text);
+        Console.print(text);
     }
 
     public static String getInput(){
-        Scanner in = new Scanner(System.in);
-        String input = in.nextLine();
-        return input;
+        return Console.getInput();
     }
 
     public static <T extends Enum<T>> T getEnumFromString(Class<T> c, String string) { //https://stackoverflow.com/questions/604424/how-to-get-an-enum-value-from-a-string-value-in-java
@@ -307,6 +237,7 @@ public class Main {
             try {
                 return Enum.valueOf(c, string.trim().toUpperCase());
             } catch(Exception ex) {
+
                 //print("Can't find nutrient "+string+" in enum. Will searched for full name next\n");
                 //ex.printStackTrace();
             }
@@ -314,17 +245,17 @@ public class Main {
         return null;
     }
 
-    public static boolean isAlpha(String name) { //https://stackoverflow.com/questions/5238491/check-if-string-contains-only-letters
-        char[] chars = name.toCharArray();
-        for (char c : chars) {
-            if(!Character.isLetter(c)) {
+    //https://stackoverflow.com/questions/5238491/check-if-string-contains-only-letters
+    private static boolean doesOnlyHaveLetters(String s){
+        for (int i = 0; i < s.length(); i++) {
+            if (!Character.isLetter(s.charAt(i))) {
                 return false;
             }
         }
         return true;
     }
 
-    public static void addLineToTXTFile(String file, String line){
+    public static void addLineToTXTFile(String file, String line){ //respect the end keyword?
         try(Writer output = new BufferedWriter(new FileWriter(file, true))){
             output.append("\n"+line);
         } catch (IOException e) {
@@ -334,12 +265,12 @@ public class Main {
 
     //GETTERS
 
-    public static String getFoodAsString(Food food, boolean printMode){
+    static String getFoodAsString(Food food, boolean printMode){
         StringBuilder stringBuilder;
         if(printMode) stringBuilder = new StringBuilder(food.getName()+" -> ");
         else stringBuilder = new StringBuilder(food.getName()+" ");
         Nutrients[] nutrients = food.getNutrients();
-        float[] vals = food.getVals();
+        float[] vals = food.getValues();
         for(int j = 0; nutrients[j]!=null ; j++){
             stringBuilder.append(nutrients[j].getFullName() +" "+ vals[j]+" ");
         }
@@ -347,7 +278,7 @@ public class Main {
         return stringBuilder.toString();
     }
 
-    public static Food getFood(String foodName){
+    private static Food getFood(String foodName){
         Food food = null;
         for(int i = 0; i< foods.size(); i++){
             if(foods.get(i).getName().equalsIgnoreCase(foodName)) food = foods.get(i);
@@ -355,35 +286,48 @@ public class Main {
         return food;
     }
 
-    public static String getAllNutrientNamesAndAbbreviations(){
+    static String getAllNutrientNamesAndAbbreviations(){
         int i = 1;
         for(Nutrients nutri : Nutrients.values()){ //or nutri.String(), returns like: CAL, CARBS, PRO. The name of the enum object itelf                                                                                            //https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html -> talks about the \\s
             print(i++ +": "+nutri.getFullName()+" | "+nutri.name()+", group:"+nutri.getGroup()+"\n");
         }
-        print("\n");
+        //print("\n");
         return null;
     }
+
 }
 
-class Food {
+//I call it: lower level class or parallel level class
+//Class main works mainly with static methods, thus, those static methods cannot work with this class Food IF it were to be an inner class of Main, because "An instance of an inner class cannot be created without an instance of the outer class."
+class Food { //https://www.quora.com/Can-we-keep-more-than-one-class-in-a-single-java-file      https://stackoverflow.com/questions/48839053/how-to-use-multiple-classes-in-java-in-one-file/48839113  https://stackoverflow.com/questions/2336692/java-multiple-class-declarations-in-one-file
     private final String name;
     private Nutrients[] nutrients;
-    private float[] vals;
+    private float[] values;
+    private FoodSafetyInfo foodSafetyInfo;
+    private InStores inStores;
 
     Food(){
         name = Main.unknownSymbol;
     }
 
-    Food(String name, Nutrients[] nutrients, float[] vals) { //check properties.length==vals?
+    Food(String name, Nutrients[] nutrients, float[] values) { //check properties.length==vals?
         this.name=name;
         this.nutrients=nutrients;
-        this.vals=vals;
+        this.values = values;
+    }
+
+    Food(String name, Nutrients[] nutrients, float[] values, int currentISO, String...stores) { //check properties.length==vals?
+        this.name=name;
+        this.nutrients=nutrients;
+        this.values = values;
+        this.foodSafetyInfo = new FoodSafetyInfo(currentISO);
+        this.inStores = new InStores(stores);
     }
 
     public void sortNutrients(){
         Nutrients[] nu = Nutrients.values(); //correct order
         Nutrients[] orderedNutrients = new Nutrients[nutrients.length];
-        float[] orderedVals = new float[vals.length];
+        float[] orderedVals = new float[values.length];
         int index = 0;
         for(int i = 0; i<nu.length; i++){ //query already in correct order
             for(int j = 0; j<nutrients.length; j++){ //get existing nutrient in already correct order
@@ -391,24 +335,60 @@ class Food {
                 //
                 if(nu[j].name().equalsIgnoreCase( nutrients[i].name() ) ){ //if exists
                     orderedNutrients[index] = nutrients[j];
-                    orderedVals[index] = vals[j];
+                    orderedVals[index] = values[j];
                     index++;
                     break;
                 }
             }
         }
         this.nutrients = orderedNutrients; //ehh https://stackoverflow.com/questions/55567935/how-to-delete-an-array-properly-in-java/55568220
-        this.vals = orderedVals; //https://stackoverflow.com/questions/15448457/deleting-an-entire-array
+        this.values = orderedVals; //https://stackoverflow.com/questions/15448457/deleting-an-entire-array
     }
 
-    public String getName() {
+    public void setValues(float[] values){
+        this.values = values;
+    }
+    public void setNutrients(Nutrients[] nutrients){
+        this.nutrients=nutrients;
+    }
+
+    public String getName(){
         return name;
     }
-    public Nutrients[] getNutrients() {
+    public Nutrients[] getNutrients(){
         return nutrients;
     }
-    public float[] getVals() {
-        return vals;
+    public float[] getValues(){
+        return values;
+    }
+    //these classes are just for fun and do demonstrate possible uses of these matters
+    //https://docs.oracle.com/javase/tutorial/java/javaOO/nested.html   https://www.geeksforgeeks.org/static-class-in-java/
+
+    private static class FoodSafetyInfo { //static inner class
+        private static final int ISO_1 = 22000;
+        private static final int ISO_2 = 23662;
+        private static int CURRENTISO;
+
+        public FoodSafetyInfo(int currentIso){
+            CURRENTISO=currentIso;
+        }
+
+    }
+
+    private class InStores { //inner class
+        String stores;
+        public InStores(String... args){ //https://www.geeksforgeeks.org/variable-arguments-varargs-in-java/
+            StringBuilder sb = new StringBuilder();
+            for (String s: args){
+                sb.append(s+", ");
+            }
+            sb.deleteCharAt(sb.length()-1);
+            sb.deleteCharAt(sb.length()-1);
+            stores=sb.toString();
+        }
+        public String getStores(){
+            return "We have the food "+name+" in the stores: "+stores;
+        }
     }
 }
 
