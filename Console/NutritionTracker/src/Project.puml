@@ -62,21 +62,6 @@ class Food {
 }
 Main o-- Food : Main uses \n class\nFood\n(Aggregation)
 
-class FoodSafetyInfo << static >> {
--static final int ISO_1
--static final int ISO_2
--static int CURRENTISO
-+FoodSafetyInfo(int currentIso)
-}
-FoodSafetyInfo +--Food : Inner class
-
-class InStores {
-+String stores;
-+Stores(String... args)
-+String getStores()
-}
-InStores +--Food : Inner class
-
 Console --> Main #line:red;line.bold : Console(deals with user input) calls functions from Main\nwhich contains and deals with all the user's food data
 }
 

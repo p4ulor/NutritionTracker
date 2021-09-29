@@ -6,7 +6,8 @@ enum Nutrients{ //daily value according to: https://www.fda.gov/food/new-nutriti
     FAT("Fat",'A',78),
     FIB("Fiber",'A',28),
 
-    //11# micros are all in mg(milligrams), to convert micro grams to miligrams -> https://www.thecalculatorsite.com/conversions/common/mcg-to-mg.php value*0.001, IU to mg https://mypharmatools.com/othertools/iu
+    //Micros are all in mg(milligrams), to convert micro grams to miligrams -> https://www.thecalculatorsite.com/conversions/common/mcg-to-mg.php value*0.001, IU to mg https://mypharmatools.com/othertools/iu
+    //11# vitamins
     //https://en.wikipedia.org/wiki/Vitamin#List
     //https://en.wikipedia.org/wiki/B_vitamins               Alternative nutrient names(acording to google and nutritiondata.self.com):
     VA("Vitamin A",'V', 0.9f),      //Retinol, retinal, retinoic acid, beta-carotene
@@ -24,7 +25,7 @@ enum Nutrients{ //daily value according to: https://www.fda.gov/food/new-nutriti
     //Choline -> there's always trace amounts in everything / easy to take the %DV /  subjective %DV / kinda irrelevant
     //Betaine -> there's always trace amounts in everything / easy to take the %DV /  subjective %DV / kinda irrelevant
 
-    //10#
+    //10# minerals
     CALC("Calcium",'M',1300), //subjective and likely inflated by the dairy industry
     IR("Iron",'M',18),
     MAG("Magnesium",'M',420),
@@ -37,7 +38,7 @@ enum Nutrients{ //daily value according to: https://www.fda.gov/food/new-nutriti
     SEL("Selenium",'M',0.055f),
     //Fluoride -> there's always trace amounts in everything / easy to take the %DV /  subjective %DV / kinda irrelevant
 
-    //PUFA(Polyunsaturated fatty acids) https://www.healthline.com/nutrition/how-much-omega-3#general-guidelines
+    //PUFA's(Polyunsaturated fatty acids) https://www.healthline.com/nutrition/how-much-omega-3#general-guidelines
     //the daily value of these nutrients may be subjective
     O3("Omega 3",'F',1600f), //alpha-linolenic acid 3.8xOmega6 radio
     O6("Omega 6",'F',420f); //linoleic acid
@@ -45,6 +46,7 @@ enum Nutrients{ //daily value according to: https://www.fda.gov/food/new-nutriti
     private final String fullName;
     private final char group; // A -> macros, V -> vitamins, M -> minerals, F -> Fatty acids
     private final float dailyValue;
+    //public final static int ammountOfNutrients = Nutrients.values().length;
     Nutrients(String fullName, char group, float dailyValue) {
         this.fullName = fullName;
         this.group = group;

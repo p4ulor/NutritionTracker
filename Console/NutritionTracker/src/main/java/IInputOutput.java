@@ -1,5 +1,5 @@
 import java.util.Scanner;
-
+//******* Demonstration purposes *******
 public interface IInputOutput { //http://tutorials.jenkov.com/java/interfaces.html
     //All variables in an interface are implicitly public, static and final
     int errorCode = -1;
@@ -25,7 +25,7 @@ public interface IInputOutput { //http://tutorials.jenkov.com/java/interfaces.ht
         return new Scanner(System.in).nextLine();
     }
 
-    default void printFormat(String s, String s2) { //new printer that doesnt brake class Console,
+    default void printFormat(String s, String s2) { //new printer method that doesnt brake class Console,
       if(s2.isEmpty()) print(String.valueOf(errorCode)); //https://stackoverflow.com/a/654049/9375488
       System.out.printf(s,s2);
     }
