@@ -18,7 +18,6 @@ interface  IInputOutput {
 + static getIntInput()
 + static String getInput()
 default void printFormat(String s, String s2)
-+void LCD_Display_print(String text)
 }
 
 

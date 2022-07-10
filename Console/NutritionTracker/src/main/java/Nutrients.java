@@ -36,7 +36,7 @@ enum Nutrients{ //daily value according to: https://www.fda.gov/food/new-nutriti
     COP("Copper",'M',1),
     MAN("Manganese",'M',2.3f),
     SEL("Selenium",'M',0.055f),
-    //Fluoride -> there's always trace amounts in everything / easy to take the %DV /  subjective %DV / kinda irrelevant
+    //Fluoride -> there's always tiny trace amounts in everything / easy to take the %DV /  subjective %DV / kinda irrelevant
 
     //PUFA's(Polyunsaturated fatty acids) https://www.healthline.com/nutrition/how-much-omega-3#general-guidelines
     //the daily value of these nutrients may be subjective
@@ -46,7 +46,7 @@ enum Nutrients{ //daily value according to: https://www.fda.gov/food/new-nutriti
     private final String fullName;
     private final char group; // A -> macros, V -> vitamins, M -> minerals, F -> Fatty acids
     private final float dailyValue;
-    //public final static int ammountOfNutrients = Nutrients.values().length;
+    public final static int ammountOfNutrients = Nutrients.values().length;
     Nutrients(String fullName, char group, float dailyValue) {
         this.fullName = fullName;
         this.group = group;

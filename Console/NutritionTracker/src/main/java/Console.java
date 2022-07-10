@@ -22,6 +22,7 @@ public final class Console implements IInputOutput {
         printCommands();
         String input;
         do{
+            print("\n$ ");
             input = getInput();
             processConsoleCommand(input.trim());
         }
@@ -102,41 +103,19 @@ public final class Console implements IInputOutput {
         else if(input.equalsIgnoreCase("end")) {}
         else { print("\nCommand doesn't exist\n");}
     }
-    //******* Use of the interface for demonstration purposes *******
+
     public static void print(String s){
         IInputOutput.print(s);
     }
 
-    //here, we try to acess our default method in our interface, and to do that, we need an to instance the interface
-    public static void printf(String s, String s2){ //since we can't call printFormat from IOutputDisplayer statically, we need to create an instance with an anonymous class
-        /* anonymous class
-        IOutputDisplayer a = new IOutputDisplayer() {
-            @Override
-            public void LCD_Display_print(String text) {
-
-            }
-        };
-         */
-        IInputOutput a = txt -> { //anonymous class with lambda (->) syntax, since it's just 1 method to override, we can use lambda, otherwise we would have to use the syntax above
-            print(txt); //(we cant System.out.print to a LCD), but is just to prove a point on how it works, this is useless, we just need an instance thats all
-        };
-        // IInputOutput a = Console::print; //alternative https://www.geeksforgeeks.org/double-colon-operator-in-java/
-        a.printFormat(s,s2);
+    public static void printf(String s, String s2) {
+        IInputOutput.printFormat(s, s2);
     }
 
-    //private static Scanner input = new Scanner(System.in);
     public static String getInput(){
         return IInputOutput.getInput();
-        //return input.nextLine();
     }
     public static int getIntInput(){
        return IInputOutput.getIntInput();
     }
-
-    @Override
-    public void LCD_Display_print(String text) {
-        //...
-    }
-
-
 }

@@ -35,7 +35,6 @@ public class Main {
         } else {
             for (int i = 0; i < list.size(); i++) {
                 print(list.get(i).getName()+", ");
-                if(i%10==0) print("\n");
             }
         }
     }
@@ -211,8 +210,8 @@ public class Main {
         if(!doesOnlyHaveLetters((foodName))) return new Food();
         boolean error = false;
         StringBuilder errorMessage = new StringBuilder("\nLine at food named "+foodName+" has errors: ");
-        Nutrients[] nutrients = new Nutrients[Nutrients.values().length];
-        float[] vals = new float[Nutrients.values().length];
+        Nutrients[] nutrients = new Nutrients[ammountOfNutrients];
+        float[] vals = new float[ammountOfNutrients];
         int length = values.length;
         if((values.length-1)/*(minus name)*/ % 2 != 0) {
             error=true;
@@ -329,7 +328,7 @@ public class Main {
 
 }
 
-//I call it: lower level class or parallel level class
+//I call it: parallel level class
 //Class main works mainly with static methods, thus, those static methods cannot work with this class Food IF it were to be an inner class of Main, because "An instance of an inner class cannot be created without an instance of the outer class."
 class Food { //https://www.quora.com/Can-we-keep-more-than-one-class-in-a-single-java-file      https://stackoverflow.com/questions/48839053/how-to-use-multiple-classes-in-java-in-one-file/48839113  https://stackoverflow.com/questions/2336692/java-multiple-class-declarations-in-one-file
     private final String name;
@@ -362,7 +361,7 @@ class Food { //https://www.quora.com/Can-we-keep-more-than-one-class-in-a-single
                 }
             }
         }
-        this.nutrients = orderedNutrients; //ehh https://stackoverflow.com/questions/55567935/how-to-delete-an-array-properly-in-java/55568220
+        this.nutrients = orderedNutrients; //ehh, let the GC (garbage colector) do its job lol https://stackoverflow.com/questions/55567935/how-to-delete-an-array-properly-in-java/55568220
         this.values = orderedVals; //https://stackoverflow.com/questions/15448457/deleting-an-entire-array
     }
 
