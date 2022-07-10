@@ -1,0 +1,57 @@
+Oats   Calories 367 cArbs        56.1    pro 12.1 fat 8.4 fiber 9.1 VE 0.4 VK 0.002 V1 0.5 V2 0.2 V3 1.1 V5 1.1 V6 0.1 V9 32 CALC 52 IR 4.3 MAG 138 PH 410 POT 362 SOD 6 ZI 3.6 COP 0.4 MAN 3.6 SEL 0.0289 O3 100 O6 2200 //(macros adapted to my brand of oats)  https://nutritiondata.self.com/facts/breakfast-cereals/1597/2
+Flakes carbs 67.7 Cal 361 pro 12.2 fat 2.2 fib 10.8 VA 1.55 VE 1.2 VK 0.0015 V1 1.3 V2 1.5 V3 17.2 V5 0.6 V6 1.7 V9 0.345 
+Weetabix Cal 379 carbs 66 pro 20 fat 2.5 fib 6.1 V1 1 V2 1.3 V3 14 V6 1.3 V9 0.18 V12 0.0023 IR 13       //https://www.weetabix.co.uk/our-products/weetabix-protein/weetabix-protein-crunch/
+Flaxseeds Cal 516 carbs 6 pro 21 fat 40 fib 24 VA 0 VC 0.6 VE 0.3 VK 0.0043 V1 1.62 V2 0.2 V3 3.1 V5 1 V6 0.5 V9 0.087 CALC 255 IR 4.5 MAG 392 PH 642 POT 813 SOD 30 ZI 18 COP 1.2 MAN 2.5 SEL 0.0254 O3 23 O6 5.8
+
+Apple Calories 18.0
+PumpkinSeeds cal 569 carbs 2.2 pro 35.7 fat 45 fib 7.6 V2 0.1 CALC 55 IR 3.3 MAG 262 PH 92 POT 919 SOD 18 ZI 10 COP 0.7 MAN 0.5 O3 77 O6 8759
+Rice         cal 355 carbs 78 pro 7.5   fat 1  fib 2.4
+Chickpeas    cal 111 carbs 12  pro 6.5   fat 2.6 fib 6 //calcio, high in leucine?
+VegInBurger  cal 130 carbs 3.3 pro 15   fat 5.7 fib 1.9
+Lentils      carbs 48 cal 339 pro 27    fat 1.8 fib 12 //calcio
+Brownrice //high in leucine?
+Brocolli //https://nutritiondata.self.com/facts/vegetables-and-vegetable-products/2357/2 calcio
+Orange //calcio https://nutritiondata.self.com/facts/fruits-and-fruit-juices/1968/2
+Figs //calcio
+Kale //https://nutritiondata.self.com/facts/vegetables-and-vegetable-products/2462/2 calcio
+Beans //calcio
+Tofu //calcio
+Chia //calcio
+Almonds //calcio
+Collardgreens //calcio
+
+
+Quinoa Calories 120 carbs 21.3 pro 4.4 fat 1.9 fib 2.8 VA 0 VC 0 VE 0.6 VK 0 V1 0.1 V2 0.1 V3 0.4 V5 0 V6 0.1 V9 0.042 CALC 17 IR 1.5 MAG 64 PH 152 POT 172 SOD 7 ZI 1.1 COP 0.2 MAN 0.6 SEL 0.0028 O3 0 O6 0 // https://nutritiondata.self.com/facts/cereal-grains-and-pasta/10352/2
+////SPECIAL, 1# Edysterone, recovery and testosterone.
+//The highest concentration of 20HE[(20-hydroxyecdysone)] previously reported in an extract of an edible crop was achieved through a multi-step solvent extraction of spinach leaves (Spinacia oleracea L.) (Gorelick-Feldman, et al., 2008). Quinoa seeds, however, contain 4 – 12 times more 20HE by dry weight (184 – 484 μg/g) (Kumpun et. al., 2011) than spinach leaves (40 μg/g) (Gorelick-Feldman, et al., 2008), and are therefore more attractive for the development of 20HE-enriched botanicals https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4116738/ 				https://www.sciencedirect.com/science/article/abs/pii/S0308814610012860?via%3Dihub (FULL -> https://www.academia.edu/29814929/Ecdysteroids_from_Chenopodium_quinoa_Willd_an_ancient_Andean_crop_of_high_nutritional_value )    
+//If you eat 50 g quinoa from a health food shop you'll probably ingest 15-20 mg 20-hydroxyecdysone https://www.ergo-log.com/quinoa.html      https://www.ergo-log.com/plantsteroids.html   https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4447764/
+// Quinoa is one of the richest edible sources of phytoecdysteroids, with a content ranged from 13.8 to 57.0 mg/100g dry weight [56] (Quinoa (Chenopodium quinoa Willd.) as a source of nutrients andbioactive compounds: a reviewBlanca Hernández-Ledesma)
+//https://www.youtube.com/watch?v=pZYo76JjxqQ
+
+Spinach Calories 23 carbs 3.7 pro 3 fat 2.2 fib 0.3 VA 3.144 VC 9.8 VE 2.1 VK 494 V1 0.1 V2 0.2 V3 0.5 V5 0.1 V6 0.2 V9 0.146 CALC 136 IR 3.6 MAG 87 PH 56 POT 466 SOD 70 ZI 0.8 COP 0.2 MAN 0.9 SEL 0.0015 O3 92 O6 17 // https://nutritiondata.self.com/facts/vegetables-and-vegetable-products/2627/2
+//SPECIAL, 1# Ecdysterone, recovery and testosterone. Calcium, iron, magnesium.  
+//Two cups[360g] of spinach (standard serving size) contains 100 mg of Ecdysterone https://www.thriveperfection.com/anabolicstaplefoods/     https://advancedmolecularlabs.com/blogs/news/the-all-natural-muscle-building-powers-of-ecdysterone
+
+
+Beetroot //SPECIAL, 2# Ecdysterone, https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3115167/
+Cherries //recovery
+Yam //african superfood?
+Turmeticextract //SPECIAL(curcumin)
+Blueberries //super food(antioxidants)
+Garlic //super food, heart, sickness, testosterone
+Kiwi //super food, vitamin c, fiber, antioxidants
+Mussels //super food, zinc
+RawOrangeJuice //https://nutritiondata.self.com/facts/fruits-and-fruit-juices/1971/2
+
+%$& //ignored line
+12323 //ignored line
+Maca
+end
+template:
+X //Calories ? carbs ? pro ? fat ? fib ? VA ? VC ? VE ? VK ? V1 ? V2 ? V3 ? V5 ? V6 ? V9 ? CALC ? IR ? MAG ? PH ? POT ? SOD ? ZI ? COP ? MAN ? SEL ? O3 ? O6 ? 
+X //Calories 0 carbs 0 pro 0 fat 0 fib 0 VA 0 VC 0 VE 0 VK 0 V1 0 V2 0 V3 0 V5 0 V6 0 V9 0 CALC 0 IR 0 MAG 0 PH 0 POT 0 SOD 0 ZI 0 COP 0 MAN 0 SEL 0 O3 0 O6 0 
+useful website for converting IU to mg:
+https://mypharmatools.com/othertools/iu
+
+pc
+pc Calories 100.0
